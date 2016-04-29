@@ -18,6 +18,7 @@ import dji.sdk.base.DJIError;
 
 public class Utils {
     public static final double ONE_METER_OFFSET = 0.00000899322;
+    public static final double ONE_FOOT_OFFSET = 0.00000274113;
     private static long lastClickTime;
     private static Handler mUIHandler = new Handler(Looper.getMainLooper());
     public static boolean isFastDoubleClick() {
@@ -79,6 +80,9 @@ public class Utils {
         return ONE_METER_OFFSET / cosForDegree(latitude);
     }
 
+    public static double calcLongitudeFeetOffset(double latitude) {
+        return ONE_FOOT_OFFSET / cosForDegree(latitude);
+    }
     public static void addLineToSB(StringBuffer sb, String name, Object value) {
         if (sb == null) return;
         sb.
