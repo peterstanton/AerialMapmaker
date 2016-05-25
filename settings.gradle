@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':google-maps-services-java-master'
 include ':dJISDKLIB'

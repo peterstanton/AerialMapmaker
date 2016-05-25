@@ -3,35 +3,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_weight="2">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save Plan"
-            android:layout_gravity="left"
-            android:layout_weight="60"
             android:onClick="SavePlan"/>
         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return to Menu"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lat:"
+                android:backgroundTint="#dcdcdc"
+                android:layout_weight="1"
+                />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Return to Menu"
-            android:layout_gravity="right"
-            android:layout_weight="33" />
-    </LinearLayout>
+            android:text="Standing by"
+            android:id="@+id/planLat"
+            android:backgroundTint="#dcdcdc"
+            android:layout_weight="2"
+            />
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Standing by for start point..."
-        android:id="@+id/planMsg"
-        android:backgroundTint="#dcdcdc"
-        android:textAlignment="center" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Long:"
+                android:backgroundTint="#dcdcdc"
+                android:layout_weight="1"
+                />
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:layout_weight="2"
+            android:id="@+id/planLong"
+            android:backgroundTint="#dcdcdc"
+            android:textAlignment="center"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alt: "
+            android:layout_weight="1"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="400"
+            android:layout_weight="4"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -40,6 +91,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         tools:context="com.c_sharpphoto.aerialmapmaker.MissionPlanner" />
 
 </LinearLayout>
