@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save Plan"
-            android:onClick="SavePlan"/>
+            android:onClick="savePlan"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,6 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="400"
+            android:id="@+id/planAlt"
+            android:inputType="number"
             android:layout_weight="4"/>
 
         </LinearLayout>

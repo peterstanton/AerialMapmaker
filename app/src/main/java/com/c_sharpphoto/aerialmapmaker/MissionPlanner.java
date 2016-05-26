@@ -1,6 +1,7 @@
 package com.c_sharpphoto.aerialmapmaker;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -22,14 +25,19 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 
 import com.google.maps.ElevationApi;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class MissionPlanner extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MissionPlanner extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, OnMarkerDragListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -40,13 +48,17 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     private TextView mLatitude;
     private TextView mLongitude;
-    private TextView mLastUpdate;
+    private EditText mAltitude;
 
-    private double myLat, myLong, polyLatOffset, polyLongOffset, highestElev, transLegOffset;
+    private static final String TAG = "MEDIA";
+
+
+    private double myLat, myLong, polyLatOffset, polyLongOffset;
     public int routeSize;
-    private double photoInterval = 300.0;
-    private double areaSide = 1800.0;
-    private double transLeg = 360.0;
+
+    public double planLat, planLong;
+    public String planText;
+    public String planAlt;
     public double[] RouteLat;
     public double[] RouteLong;
     public int[] RouteAction;
@@ -68,6 +80,10 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        mLatitude = (TextView) findViewById(R.id.planLat);
+        mLongitude = (TextView) findViewById(R.id.planLong);
+        mAltitude = (EditText) findViewById(R.id.planAlt);
+
     }
 
 
@@ -83,6 +99,7 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerDragListener(this);
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -95,6 +112,9 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onConnected(Bundle bundle) {
+
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -112,13 +132,10 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
         mLatitude.setText(String.valueOf(mLastLocation.getLatitude()));
         mLongitude.setText(String.valueOf(mLastLocation.getLongitude()));
         dat = DateFormat.getTimeInstance().format(new Date()).toString();
-        mLastUpdate.setText(dat);
         myLat = mLastLocation.getLatitude();
         myLong = mLastLocation.getLongitude();
         LatLng currLoc = new LatLng(myLat, myLong);
-        polyLatOffset = areaSide * Utils.ONE_FOOT_OFFSET;
-        polyLongOffset = areaSide * Utils.calcLongitudeFeetOffset(myLat);
-        mMap.addMarker(new MarkerOptions().position(currLoc).title("I am here."));
+        mMap.addMarker(new MarkerOptions().position(currLoc).title("Start point").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLoc, (float) 19.0));
         /*Polygon initialPolygon = mMap.addPolygon(new PolygonOptions()
                 .add(new LatLng(myLat, myLong),
@@ -230,9 +247,6 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
         client.disconnect();
     }
 
-    public double checkHighestElevation() {
-        return 0.0;
-    }
 
     public void createLowRoad(double la, double lo) {
         routeSize = 54;
@@ -280,20 +294,54 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     }
 
-    public int highestElev(int routeSize) {
-        String point;
 
-        for (int i = 0; i < routeSize; i++) {
-            point = RouteLat[i] + "," + RouteLong[i];
-            WebResource webResource = client.resource("https://maps.googleapis.com/maps/api/elevation/json?locations=" + point + "&key=myAPIkey");
-            ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-            String data = response.getEntity(String.class);
+    @Override
+    public void onMarkerDragStart(Marker marker) {
 
-        }
-
-        return 0;
     }
 
+    @Override
+    public void onMarkerDrag(Marker marker) {
 
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        planLat = marker.getPosition().latitude;
+        planLong = marker.getPosition().longitude;
+        mLatitude.setText(String.valueOf(planLat));
+        mLongitude.setText(String.valueOf(planLong));
+
+    }
+
+    public void savePlan(View view) {
+        String planAltitude = mAltitude.getText().toString();
+        int alt = Integer.parseInt(planAltitude);
+        if (alt>400)
+            planAltitude = "400";
+        if (alt<200)
+            planAltitude = "200";
+        planText = "Plan:"+String.valueOf(planLat)+","+String.valueOf(planLong)+","+planAltitude+",0;";
+        String format = "yyyyMMddHHmmss";
+        String dat = DateFormat.getDateTimeInstance().format(new Date());
+        String filename = dat+"plan.txt";
+
+
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(filename, Context.MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e(TAG, "******* File not found.");
+        }
+        try {
+            fos.write(planText.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(TAG, "******* IOException");
+        }
+
+    }
 };
 
