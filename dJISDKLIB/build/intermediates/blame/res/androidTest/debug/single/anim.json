@@ -16,12 +16,12 @@
         "source": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_in.xml"
     },
     {
-        "merged": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter_back.xml",
-        "source": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter_back.xml"
-    },
-    {
         "merged": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_in.xml",
         "source": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter_back.xml",
+        "source": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter_back.xml"
     },
     {
         "merged": "C:\\Users\\Robert\\AndroidStudioProjects\\AerialMapmaker\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_out.xml",
