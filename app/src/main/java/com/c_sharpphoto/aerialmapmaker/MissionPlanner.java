@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,7 +42,6 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
     private Location mOldLocation;
     private LocationRequest mLocationRequest;
     private String dat;
@@ -49,11 +49,12 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
     private TextView mLatitude;
     private TextView mLongitude;
     private EditText mAltitude;
+    private TextView saved;
 
     private static final String TAG = "MEDIA";
 
 
-    private double myLat, myLong, polyLatOffset, polyLongOffset;
+    private double myLat, myLong;
     public int routeSize;
 
     public double planLat, planLong;
@@ -82,6 +83,7 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         mLatitude = (TextView) findViewById(R.id.planLat);
         mLongitude = (TextView) findViewById(R.id.planLong);
+        saved = (TextView) findViewById(R.id.saveSuccess);
         mAltitude = (EditText) findViewById(R.id.planAlt);
 
     }
@@ -125,7 +127,7 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation == null) {
             return;
         }
@@ -297,6 +299,7 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onMarkerDragStart(Marker marker) {
+        saved.setText("Press [Save] to save plan.");
 
     }
 
@@ -341,7 +344,11 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
             e.printStackTrace();
             Log.e(TAG, "******* IOException");
         }
+        saved.setText("Plan save successful.");
 
     }
+
+
+
 };
 
