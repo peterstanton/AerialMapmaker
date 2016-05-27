@@ -30,7 +30,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 
-import com.google.maps.ElevationApi;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
