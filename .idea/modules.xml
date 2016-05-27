@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/AerialMapmaker.iml" filepath="$PROJECT_DIR$/AerialMapmaker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dJISDKLIB/dJISDKLIB.iml" filepath="$PROJECT_DIR$/dJISDKLIB/dJISDKLIB.iml" />
-      <module fileurl="file://$PROJECT_DIR$/google-maps-services-java-master/google-maps-services-java-master.iml" filepath="$PROJECT_DIR$/google-maps-services-java-master/google-maps-services-java-master.iml" />
     </modules>
   </component>
 </project>

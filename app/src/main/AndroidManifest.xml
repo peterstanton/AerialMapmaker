@@ -58,9 +58,9 @@
             android:name="com.dji.sdk.API_KEY"
             android:value="0392dedcbe20a95a823b69bb" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
+        <!--<activity-->
+            <!--android:name=".MapsActivity"-->
+            <!--android:label="@string/title_activity_maps" />-->
         <activity
             android:name=".MissionPlanner"
             android:label="@string/title_activity_mission_planner" />
@@ -77,10 +77,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service
-            android:name=".Elevation"
-            android:enabled="true"
-            android:exported="true"></service>
+        <!--<service-->
+            <!--android:name=".Elevation"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"></service>-->
     </application>
 
 </manifest>
