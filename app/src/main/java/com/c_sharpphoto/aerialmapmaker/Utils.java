@@ -1,12 +1,8 @@
 package com.c_sharpphoto.aerialmapmaker;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dji.sdk.sample.utils.DJIDialog;
+
+
 
 import dji.sdk.base.DJIError;
 
