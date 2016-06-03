@@ -2,6 +2,7 @@ package com.c_sharpphoto.aerialmapmaker;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -79,6 +80,7 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Intent i = getIntent();
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         mLatitude = (TextView) findViewById(R.id.planLat);
         mLongitude = (TextView) findViewById(R.id.planLong);
@@ -347,9 +349,13 @@ public class MissionPlanner extends FragmentActivity implements OnMapReadyCallba
 
     }
 
+    public void returnToMenu (View view) {
+        finish();
+    }
+
+};
 
 
-}
 
 
 
