@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     public static final int PICKFILE_RESULT_CODE = 1;
+    public static final int EXTRA_FLIGHTPLAN = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Fix no activity available
         if (data == null)
@@ -42,5 +46,11 @@ public class MainActivity extends AppCompatActivity {
                     //FilePath is your file as a string
                 }
         }
+        Intent flightPlan = getIntent();
+        Intent missionPlan = new Intent(this, MissionPlanner.class);
+        missionPlan.putExtra(EXTRA_FLIGHTPLAN, flightPlan);
+        startActivity(missionPlan);
     }
 }
+
+///test test test
